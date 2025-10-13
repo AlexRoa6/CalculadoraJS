@@ -9,7 +9,6 @@ const botonMultiplicar = document.getElementById("multiplicar");
 const botonDividir = document.getElementById("dividir");
 const botonResto = document.getElementById("resto");
 const botonPotencia = document.getElementById("potencia");
-
 let operacionActiva = false;
 let num1 = 0;
 let operador;
@@ -29,7 +28,9 @@ botones.forEach(function (boton) {
           resultadoOperacion = 0;
           break;
         case botonIgual:
-          calcularResultado();
+          if (operacionActiva) {
+            calcularResultado();
+          }
           break;
       }
 
