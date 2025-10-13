@@ -53,8 +53,17 @@ button{
     margin: 5%;
 }
 
-.operar{
+button:hover{
+    cursor: pointer;
+    background-color: #5c5c5c;
+}
+
+
+.operar, .eliminar{
     background-color: #FF9800;
+}
+.operar:hover, .eliminar:hover{
+    background-color: #f8b34c;
 }
 
 #cajaResultado{
