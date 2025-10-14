@@ -16,15 +16,24 @@ botones.forEach(function (boton) {
   boton.addEventListener("click", function () {
     // En caso de pulsar botones numericos
     if (boton.className === "numero") {
+      if(cajaResultado.value != 0 || boton.id == "decimal" || cajaResultado.value.slice(-1)=="."){
       cajaResultado.value += boton.textContent;
+      }
+      else{
+        cajaResultado.value = boton.textContent;
+      }
     } else {
       // Boton de borrar el ultimo caracter
       switch (boton) {
         case botonBorrar:
-          cajaResultado.value = cajaResultado.value.slice(0, -1);
+          if (cajaResultado.value != 0) {
+            cajaResultado.value = cajaResultado.value.slice(0,-1)
+          }else if(cajaResultado.value.length == 0){
+            cajaResultado.value =0
+          }
           break;
         case botonLimpiar:
-          cajaResultado.value = null;
+          cajaResultado.value = 0;
           resultadoOperacion = 0;
           break;
         case botonIgual:

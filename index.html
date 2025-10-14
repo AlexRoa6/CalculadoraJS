@@ -11,14 +11,14 @@
       <h1>CALCULADORA</h1>
       <nav>
         <ul>
-          <li>GitHub</li>
+          <li id="gitHub"><a href="https://github.com/AlexRoa6">GitHub</a></li>
           <img src="img/logo.png" alt="logo" id="logo" />
         </ul>
       </nav>
     </header>
     <main>
       <div id="contenedorCalculadora">
-        <input type="text" id="cajaResultado" />
+        <input type="text" id="cajaResultado" disabled value="0"/>
         <table>
           <tr>
             <td><button class="eliminar" id="borrar">Borrar</button></td>
@@ -47,8 +47,8 @@
           <tr>
             <td><button class="operar" id="potencia">^</button></td>
             <td><button class="numero">0</button></td>
-            <td><button class="numero">.</button></td>
-            <td><button class="eliminar" id="igual">=</button></td>
+            <td><button class="numero" id="decimal">.</button></td>
+            <td><button class="operar" id="igual">=</button></td>
           </tr>
         </table>
       </div>
