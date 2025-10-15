@@ -93,17 +93,39 @@ button:hover{
 }
 
 #cajaResultado{
-    width: 100%;
+    width: 50vh;
     height: 10vh;
     background-color: #1E1E1E;
     margin-bottom: 20px;
-    border-radius: 10px;
+    border-radius: 0px 0px 10px 10px;
     border-style: outset;
     border-color: #ff9900;
     font-family: "Audiowide";
     color: white;
-    padding-left: 20px;
+    padding-right: 20px;
     font-size: 1.5em;
+    border-top: none;
+    text-align: right;
+}
+#cajaOperacion{
+    width: 50vh;
+    height: 4vh;
+    background-color: #1E1E1E;
+    margin: 0;
+    border-style: outset;
+    border-color: #ff9900;
+    border-bottom: none;
+    border-radius: 10px 10px 0px 0px;
+    font-family: "Audiowide";
+    color: white;
+    padding-left: 20px;
+    font-size: 1em;
+    padding-top: 10px;
+    
+}
+#pantallas{
+    display: flex;
+    flex-direction: column;
 }
 #contenedorCalculadora{
     background-color: #110f0f;
