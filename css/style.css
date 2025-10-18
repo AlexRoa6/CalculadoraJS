@@ -85,10 +85,10 @@ button:hover{
 }
 
 
-.operar, .eliminar{
+.operar, .eliminar, #igual{
     background-color: #FF9800;
 }
-.operar:hover, .eliminar:hover{
+.operar:hover, .eliminar:hover, #igual:hover{
     background-color: #f8b34c;
 }
 
