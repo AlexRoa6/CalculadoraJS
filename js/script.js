@@ -33,7 +33,7 @@ function manejarClick(boton) {
 }
 
 function manejarNumeros(boton) {
-  if (operacionCompletada) reinicarValores(); //Si ya se ha realizado una operacion al pulsar de nuevo un boton reinicar Valores
+  if (operacionCompletada) reiniciarValores(); //Si ya se ha realizado una operacion al pulsar de nuevo un boton reinicar Valores
   if (!guardarEnSegundoNumero) { // Guardar los numeros pulsados en num1 hasta que se pulse un operador
     num1 += boton.textContent;
     cajaResultado.value = num1;
@@ -86,12 +86,12 @@ function calcularResultado() {
 function manejarEliminar(id) {
   if (id === "borrar") {
   } else if (id === "limpiar") { // Al pulsar el boton "C" reinicar Valores y la pantalla de abajo
-    reinicarValores();
+    reiniciarValores();
     cajaResultado.value = 0;
   }
 }
 
-function reinicarValores() {
+function reiniciarValores() {
   operacionActiva = false;
   guardarEnSegundoNumero = false;
   num1 = "";
