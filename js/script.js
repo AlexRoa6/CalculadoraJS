@@ -1,47 +1,53 @@
 const cajaResultado = document.getElementById("cajaResultado");
+const cajaOperacion = document.getElementById("cajaOperacion");
 const botones = document.querySelectorAll("button");
-const botonBorrar = document.getElementById("borrar");
-const botonLimpiar = document.getElementById("limpiar");
-const botonIgual = document.getElementById("igual");
-const botonSumar = document.getElementById("sumar");
-const botonRestar = document.getElementById("restar");
-const botonMultiplicar = document.getElementById("multiplicar");
-const botonDividir = document.getElementById("dividir");
-const botonResto = document.getElementById("resto");
-const botonPotencia = document.getElementById("potencia");
 let operacionActiva = false;
-let num1 = 0;
+let guardarEnSegundoNumero = false;
+let num1="";
+let num2="";
 let operador;
-
+let operacionCompletada = false;
+// Añadir listenner a cada boton.
 botones.forEach(function (boton) {
   boton.addEventListener("click", function () {
+    // Funcion principal
     manejarClick(boton);
   });
 });
 
+// Funcion que define que hace en caso de pulsar los distintos botones
 function manejarClick(boton) {
-  if (boton.className === "numero") {
-    if (
-      cajaResultado.value != 0 ||
-      boton.id == "decimal" ||
-      cajaResultado.value.slice(-1) == "."
-    ) {
-      cajaResultado.value += boton.textContent;
-    } else {
-      cajaResultado.value = boton.textContent;
-    }
-  } else {
-    pulsarBotonDeEliminarOIgual(boton);
+  if (boton.classList.contains("numero")) manejarNumeros(boton);
+  else if (boton.classList.contains("operar") && !operacionActiva && num1 !=="")
+    manejarOperador(boton.textContent);
+  else if (boton.id === "igual" && operacionActiva) calcularResultado();
+  else if (boton.classList.contains("eliminar")) manejarEliminar(boton.id);
+}
 
-    if (!operacionActiva) {
-      pulsarBotonDeOperacion(boton);
-    }
+function manejarNumeros(boton) {
+  if (operacionCompletada) reinicarValores();
+  if (!guardarEnSegundoNumero) {
+    num1 += boton.textContent;
+    cajaResultado.value = num1;
+  } else {
+    num2 += boton.textContent;
+    cajaResultado.value = num2;
   }
 }
 
+function manejarOperador(op) {
+  operador = op;
+  guardarEnSegundoNumero = true;
+  cajaOperacion.value += num1 + op;
+  operacionActiva = true;
+}
+
+// Funcion que calcula el resultado de la operacion
 function calcularResultado() {
   let resultado;
-  let num2 = parseFloat(cajaResultado.value);
+  cajaOperacion.value = num1 + operador + num2;
+  num1 = parseFloat(num1);
+  num2 = parseFloat(num2);
   switch (operador) {
     case "+":
       resultado = num1 + num2;
@@ -55,74 +61,31 @@ function calcularResultado() {
     case "/":
       resultado = num1 / num2;
       break;
-    case "%":
-      resultado = num1 % num2;
-      break;
     case "^":
       resultado = num1 ** num2;
       break;
+    case "%":
+      resultado = num1 % num2;
+      break;
   }
-
   cajaResultado.value = resultado;
+  operacionCompletada = true;
+}
+
+function manejarEliminar(id) {
+  if (id === "borrar") {
+  } else if (id === "limpiar") {
+    reinicarValores();
+    cajaResultado.value = 0;
+  }
+}
+
+function reinicarValores() {
   operacionActiva = false;
-  num1 = 0;
-  operador = "";
-}
-
-function pulsarBotonDeOperacion(boton) {
-  num1 = parseFloat(cajaResultado.value);
-
-  switch (boton) {
-    case botonSumar:
-      operacionActiva = true;
-      operador = "+";
-      cajaResultado.value = "";
-      break;
-    case botonRestar:
-      operacionActiva = true;
-      operador = "-";
-      cajaResultado.value = "";
-      break;
-    case botonMultiplicar:
-      operacionActiva = true;
-      operador = "*";
-      cajaResultado.value = "";
-      break;
-    case botonDividir:
-      operacionActiva = true;
-      operador = "/";
-      cajaResultado.value = "";
-      break;
-    case botonResto:
-      operacionActiva = true;
-      operador = "%";
-      cajaResultado.value = "";
-      break;
-    case botonPotencia:
-      operacionActiva = true;
-      operador = "^";
-      cajaResultado.value = "";
-      break;
-  }
-}
-
-function pulsarBotonDeEliminarOIgual(boton) {
-  switch (boton) {
-    case botonBorrar:
-      if (cajaResultado.value != 0) {
-        cajaResultado.value = cajaResultado.value.slice(0, -1);
-      } else if (cajaResultado.value.length == 0) {
-        cajaResultado.value = 0;
-      }
-      break;
-    case botonLimpiar:
-      cajaResultado.value = 0;
-      resultadoOperacion = 0;
-      break;
-    case botonIgual:
-      if (operacionActiva) {
-        calcularResultado();
-      }
-      break;
-  }
+  guardarEnSegundoNumero = false;
+  num1 = "";
+  num2 = "";
+  operador = null;
+  operacionCompletada = false;
+  cajaOperacion.value = "";
 }
