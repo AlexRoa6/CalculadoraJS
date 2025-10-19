@@ -20,11 +20,7 @@ function manejarClick(boton) {
   //Pulsar un numero
   if (boton.classList.contains("numero")) manejarNumeros(boton);
   // Pulsar un operador comprobar que ya hay num1 y que no se ha pulsado ningun otro operador antes
-  else if (
-    boton.classList.contains("operar") &&
-    !operacionActiva &&
-    num1 !== ""
-  )
+  else if (boton.classList.contains("operar") && !operacionActiva && num1 != "")
     manejarOperador(boton.textContent);
   // Pulsar boton de igual comprobar que ya hay un operador pulsado
   else if (boton.id === "igual" && operacionActiva) calcularResultado();
@@ -34,12 +30,16 @@ function manejarClick(boton) {
 
 function manejarNumeros(boton) {
   if (operacionCompletada) reiniciarValores(); //Si ya se ha realizado una operacion al pulsar de nuevo un boton reinicar Valores
-  if (!guardarEnSegundoNumero) { // Guardar los numeros pulsados en num1 hasta que se pulse un operador
-    num1 += boton.textContent;
-    cajaResultado.value = num1;
-  } else { // Los valores se guardan en num2 si ya se ha pulsado un operador
-    num2 += boton.textContent;
-    cajaResultado.value = num2;
+  if (!(cajaResultado.value.includes(".") && boton.id === "decimal")) { // Evitar que se ponga mas de un "." decimal
+    if (!guardarEnSegundoNumero) {
+      // Guardar los numeros pulsados en num1 hasta que se pulse un operador
+      num1 += boton.textContent;
+      cajaResultado.value = num1;
+    } else {
+      // Los valores se guardan en num2 si ya se ha pulsado un operador
+      num2 += boton.textContent;
+      cajaResultado.value = num2;
+    }
   }
 }
 
@@ -55,9 +55,9 @@ function manejarOperador(op) {
 function calcularResultado() {
   let resultado;
   cajaOperacion.value = num1 + operador + num2; // Muestra en la pantalla de arriba la operacion completa
-  num1 = parseFloat(num1); 
+  num1 = parseFloat(num1);
   num2 = parseFloat(num2);
-  // Evalua el operador activo y realiza la operacion correspondiente 
+  // Evalua el operador activo y realiza la operacion correspondiente
   switch (operador) {
     case "+":
       resultado = num1 + num2;
@@ -84,8 +84,10 @@ function calcularResultado() {
 
 // Define la accion que realizar en caso de pulsar los botones de "C" o "Borrar"
 function manejarEliminar(id) {
-  if (id === "borrar") {
-  } else if (id === "limpiar") { // Al pulsar el boton "C" reinicar Valores y la pantalla de abajo
+  if (id === "borrar" && cajaResultado.value != 0) borrarUltimoCaracter()
+
+  else if (id === "limpiar") {
+    // Al pulsar el boton "C" reinicar Valores y la pantalla de abajo
     reiniciarValores();
     cajaResultado.value = 0;
   }
@@ -100,3 +102,17 @@ function reiniciarValores() {
   operacionCompletada = false;
   cajaOperacion.value = "";
 }
+
+
+function borrarUltimoCaracter(){
+    if(cajaResultado.value.length == 1) {
+      cajaResultado.value = 0
+      if(guardarEnSegundoNumero) num2 = 0
+      else num1 = 0
+    }
+    else {
+      cajaResultado.value = cajaResultado.value.slice(0,-1)
+      if(guardarEnSegundoNumero) num2 = num2.slice(0,-1)
+      else num1 = num1.slice(0, -1)
+    }
+} 
